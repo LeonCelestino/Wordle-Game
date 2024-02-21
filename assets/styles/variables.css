@@ -1,0 +1,14 @@
+:root {
+    /* THEME */
+    --text-color: #f8f8f8;
+    --bg: #171C22;
+    --card-shadow: #3a4556;
+    --card-bg: #192027;
+    --wrong-position: #364145;
+    --right-position: #F29E38;
+    /* DOM PROPERTIES */
+
+    --columns: 0;
+    --row-size: 0rem;
+    
+}
