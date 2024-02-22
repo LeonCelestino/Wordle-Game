@@ -1,8 +1,9 @@
+const word = "wordle";
+
 const generateGrid = (word="") => {
     const length = word.length;
     const wordle = document.querySelector("#Wordle");
     const frag = document.createDocumentFragment();
-    let j = 6;
     for (let i = 0; i < length*4; i++) {
         const div = document.createElement("div");
         const textField = document.createElement("input");
@@ -28,12 +29,9 @@ const generateGrid = (word="") => {
     document.documentElement.style.setProperty("--row-size", `${newHeight}rem`);
 } 
 
-
-generateGrid("wordle");
-
+generateGrid(word);
 
 const inputField = document.querySelectorAll(".js-inputField");
-
 
 inputField.forEach((input, index) => {
     input.addEventListener("input", (e) => {
@@ -43,13 +41,38 @@ inputField.forEach((input, index) => {
 })
 
 inputField.forEach((input, index) => {
+    input.addEventListener("keydown", (e) => {
+        const target = e.target;
+        console.log(e.code)
+        if (e.code === "Backspace" && !target.value) {
+            target.value = "";
+        }
+
+    })
+
     input.addEventListener("keyup", (e) => {
         const target = e.target;
-        if (e.keyCode === 8 && !target.value) inputField[index - 1].focus();
-        if (e.keyCode === 8 && !target.value && inputField[index - 1].value.length) inputField[index - 1].value = "";
-        if (target.value.length) inputField[index + 1].focus();
+
+        if (target.value.length) {
+            inputField[index + 1].focus();
+        }
+
+        if (e.code === "Backspace" && !target.value) {
+            inputField[index - 1].focus();
+        }
 
     })
 })
 
 
+document.addEventListener("keyup", (e) => {
+    const enter = "Enter";
+    /* TODO:
+        Check if first row is entirely filled,
+        Compare positions of the letters with the position of "Word"
+        Handle styling according with if the letter exists in the word, if it exists and is in the correct position and if it doesn't exists
+    */
+    if (e.code === enter) {
+        
+    }
+})

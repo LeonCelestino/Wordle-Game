@@ -9,20 +9,19 @@
 }
 
 .wordle-grid {
-    width: 100%;
+    width: min(100%, 50rem);
+    min-width: 15rem;
     padding: 2rem;
 
     display: grid;
-    grid-template-columns: repeat(var(--columns), 8rem);
-    grid-template-rows: repeat(4, 8rem);
+    grid-template-columns: repeat(var(--columns), 1fr);
     place-content: center;
     gap: 1rem;
 
 }
 
 .card {
-    grid-column: span 1;
-    grid-row: span 1;
+    aspect-ratio: 1;
 }
 
 .m-card-style {
@@ -31,7 +30,7 @@
 }
 
 .title {
-    font-size: 3rem;
+    font-size: max(4rem, 5vw + 1rem);
 }
 
 .text-field {
@@ -42,7 +41,7 @@
     outline: 0;
     border: 0;
 
-    font-size: 2rem;
+    font-size: max(1rem, 1rem + 1vw);
     text-align: center;
 
     color: var(--text-color);
