@@ -43,16 +43,20 @@ inputField.forEach((input, index) => {
 inputField.forEach((input, index) => {
     input.addEventListener("keydown", (e) => {
         const target = e.target;
-        console.log(e.code)
-        if (e.code === "Backspace" && !target.value) {
-            target.value = "";
+        const key = e.key.length === 1 ? e.key : "";
+
+        if (e.code === "Backspace" && !target.value  && inputField[index - 1]) {
+            inputField[index - 1].value = "";
+        }
+
+        if (target.value && key) {
+            inputField[index + 1].value = key;
         }
 
     })
 
     input.addEventListener("keyup", (e) => {
         const target = e.target;
-
         if (target.value.length) {
             inputField[index + 1].focus();
         }
