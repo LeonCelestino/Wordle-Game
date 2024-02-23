@@ -31,6 +31,7 @@
 
 .title {
     font-size: max(4rem, 5vw + 1rem);
+    user-select: none;
 }
 
 .text-field {

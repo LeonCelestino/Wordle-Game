@@ -68,15 +68,67 @@ inputField.forEach((input, index) => {
     })
 })
 
+const inputs = (fields=[], startIndex) => {
+    const endIndex = startIndex + word.length;
+    const arr = [];
 
-document.addEventListener("keyup", (e) => {
-    const enter = "Enter";
-    /* TODO:
+    for (let i = startIndex; i < endIndex; i++) {
+        arr.push(fields[i]);
+    }
+
+    return arr;
+}
+
+
+const checkIfRowIsFilled = (fields=[], startIndex) => {
+    const endIndex = startIndex + word.length;
+
+    for (let i = startIndex; i < endIndex; i++) {
+        if (!fields[i].value) return;
+    }
+
+    return true;
+}
+
+const checkLettersInCorrectPlace = (word, inputs) => {
+    inputs.forEach((letter, index) => {
+        if (letter.value.toLowerCase() === word[index].toLowerCase()) {
+            letter.closest("div").style.backgroundColor = "var(--right-position)";
+        }
+    })
+}
+
+const isLetterInWord = (word, inputs) => {
+    inputs.forEach((letter, index) => {
+        if (word.includes(letter.value) && !(letter.value === word[index]) ) {  
+            letter.closest("div").style.backgroundColor = "var(--is-in-word)";
+        }
+    })
+}
+
+const isLetterWrong = (word, inputs) => {
+    inputs.forEach((letter) => {
+        if (!word.includes(letter.value)) {  
+            letter.closest("div").style.backgroundColor = "var(--wrong-position)";
+        }
+    })
+}
+
+/* TODO:
         Check if first row is entirely filled,
         Compare positions of the letters with the position of "Word"
         Handle styling according with if the letter exists in the word, if it exists and is in the correct position and if it doesn't exists
     */
-    if (e.code === enter) {
-        
+
+document.addEventListener("keyup", (e) => {
+    const enter = "Enter";
+    const isRowFilled = checkIfRowIsFilled(inputField, 0);
+    if (e.code === enter && isRowFilled) {
+        checkLettersInCorrectPlace(word, inputs(inputField, 0));
+        isLetterInWord(word, inputs(inputField, 0));
+        isLetterWrong(word, inputs(inputField, 0));
+        console.log(isRowFilled);
     }
 })
+
+
