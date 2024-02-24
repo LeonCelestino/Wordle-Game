@@ -4,6 +4,7 @@ const generateGrid = (word="", createFirstInputs) => {
     const length = word.length;
     const wordle = document.querySelector("#Wordle");
     const frag = document.createDocumentFragment();
+
     for (let i = 0; i < length*4; i++) {
         const div = document.createElement("div");
         div.classList.add("js-card", "card", "m-card-style");
@@ -11,6 +12,7 @@ const generateGrid = (word="", createFirstInputs) => {
         if (i < word.length) {
             div.appendChild(createFirstInputs());
         }
+
         frag.appendChild(div);
     }
 
@@ -22,7 +24,6 @@ const generateGrid = (word="", createFirstInputs) => {
 generateGrid(word, createInputs);
 
 addEventsToInputs();
-
 
 const boxes = document.querySelectorAll(".js-card");
 
@@ -37,7 +38,6 @@ const inputs = (fields=[], startIndex) => {
     return arr;
 }
 
-
 const checkIfRowIsFilled = (fields=[], startIndex) => {
     const endIndex = startIndex + word.length;
 
@@ -46,48 +46,6 @@ const checkIfRowIsFilled = (fields=[], startIndex) => {
     }
 
     return true;
-}
-
-const checkLettersInCorrectPlace = (word, inputs) => {
-    inputs.forEach((letter, index) => {
-        if (letter.value.toLowerCase() === word[index].toLowerCase()) {
-            const p = document.createElement("p");
-            p.classList.add("letter");
-            p.textContent = letter.value;
-            letter.closest("div").style.backgroundColor = "var(--right-position)";
-            letter.closest("div").replaceChildren(p);
-        }
-    })
-}
-
-const isLetterInWord = (word, inputs) => {
-    inputs.forEach((letter, index) => {
-        if (word.includes(letter.value) && !(letter.value === word[index]) ) {  
-            const p = document.createElement("p");
-            p.classList.add("letter");
-            p.textContent = letter.value;
-            letter.closest("div").style.backgroundColor = "var(--is-in-word)";
-            letter.closest("div").replaceChildren(p);
-        }
-    })
-}
-
-const isLetterWrong = (word, inputs) => {
-    inputs.forEach((letter) => {
-        if (!word.includes(letter.value)) {  
-            const p = document.createElement("p");
-            p.classList.add("letter");
-            p.textContent = letter.value;
-            letter.closest("div").style.backgroundColor = "var(--wrong-position)";
-            letter.closest("div").replaceChildren(p);
-        }
-    })
-}
-
-const createNewRow = (boxes, word, index, createInputs) => {
-    for (let i = 0; i < word.length; i++) {
-        boxes[i + index*word.length].appendChild(createInputs());
-    }
 }
 
 const numberOfTries = () => {
@@ -112,9 +70,7 @@ document.addEventListener("keyup", (e) => {
         const tries = updateTries(1);
 
         if (isRowFilled && tries < 5) {
-            checkLettersInCorrectPlace(word, inputs(inputField, 0));
-            isLetterWrong(word, inputs(inputField, 0));
-            isLetterInWord(word, inputs(inputField, 0));
+            gameCheckers(word, inputField)
             createNewRow(boxes, word, tries, createInputs);
             addEventsToInputs();
 
@@ -126,6 +82,62 @@ document.addEventListener("keyup", (e) => {
     }
 })
 
+/* simple checkers */
+
+/* Creations utils */
+
+function createNewRow(boxes, word, index, createInputs) {
+    for (let i = 0; i < word.length; i++) {
+        boxes[i + index*word.length].appendChild(createInputs());
+    }
+}
+
+function createInputs() {
+    const attributes = {
+        type: "text",
+        placeholder: "o",
+        maxlength: "1",
+        value: "",
+    }
+
+    const input = document.createElement("input");
+    input.classList.add("text-field", "txt-color", "js-inputField");
+    for (let [key, value] of Object.entries(attributes)) {
+        input.setAttribute(key, value);
+    }
+
+    return input;
+}
+
+function createCongratsDiv(word, tryy, createGrid) {
+    const wordle = document.querySelector("#Wordle");
+    const template = document.querySelector("#template-congrats");
+    const clone = template.content.cloneNode(true);
+    
+    clone.querySelector(".js-word").textContent = word;
+    clone.querySelector("js-tries").textContent = tryy;
+    
+    document.querySelector(".js-button").addEventListener("click", _ => {
+        wordle.replaceChildren(createGrid());
+    })
+
+    wordle.replaceChildren(clone);
+}
+
+
+function tryAgain(createGrid) {
+    const wordle = document.querySelector("#Wordle");
+    const template = document.querySelector("#template-try-again");
+    const clone = template.content.cloneNode(true);
+    
+    document.querySelector(".js-button").addEventListener("click", _ => {
+        wordle.replaceChildren(createGrid());
+    })
+
+    wordle.replaceChildren(clone);
+}
+
+/* Event Utils */
 
 function addEventsToInputs() {
     const inputField = document.querySelectorAll(".js-inputField");
@@ -168,19 +180,32 @@ function addEventsToInputs() {
     return inputField;
 }
 
+function gameCheckers(word, inputs) {
+    let update = 1;
+    inputs.forEach((letter, index) => {
+        const p = document.createElement("p");
+        p.classList.add("letter", "txt-color");
+        p.textContent = letter.value;
+        if (letter.value.toLowerCase() === word[index].toLowerCase()) {
+            letter.closest("div").style.backgroundColor = "var(--right-position)";
+            letter.closest("div").setAttribute("data-js", `${update}`);
+            update++;
+            letter.closest("div").replaceChildren(p);
 
-function createInputs() {
-    const attributes = {
-        type: "text",
-        placeholder: "o",
-        maxlength: "1",
-        value: "",
-    }
-    const input = document.createElement("input");
-    input.classList.add("text-field", "js-inputField");
-    for (let [key, value] of Object.entries(attributes)) {
-        input.setAttribute(key, value);
-    }
+        }
+    })
 
-    return input;
+    inputs.forEach((letter, index) => {
+        if (word.includes(letter.value) && !(letter.value === word[index]) ) {
+            letter.closest("div").style.backgroundColor = "var(--is-in-word)";
+            letter.closest("div").replaceChildren(p);
+        }
+    })
+
+    inputs.forEach((letter) => {
+        if (!word.includes(letter.value)) {  
+            letter.closest("div").style.backgroundColor = "var(--wrong-position)";
+            letter.closest("div").replaceChildren(p);
+        }
+    })
 }

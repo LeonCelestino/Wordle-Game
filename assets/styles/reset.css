@@ -11,6 +11,5 @@ html, input[type="text"] {
 
 body {
     background: var(--bg);
-    color: var(--text-color);
 }
 

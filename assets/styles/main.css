@@ -59,6 +59,10 @@
     font-size: max(1rem, 1rem + 1vw);
 }
 
+.txt-color {
+    color: var(--text-color);
+}
+
 ::placeholder {
     color: #f8f8f838;
 }
