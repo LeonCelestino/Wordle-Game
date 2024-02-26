@@ -80,7 +80,7 @@
 
     /* Closure to update "count" on event fire */
     
-    const wordsRight = () => {
+    const lettersRight = () => {
         let count = 0;
 
         return function clos(update){
@@ -90,8 +90,8 @@
     
     }
     
-    const updateCount = wordsRight();
-    console.log(word);
+    const updateLettersRightCount = lettersRight();
+    console.log(word)
     
     /* Will fire when the user press enter only */
     
@@ -107,20 +107,20 @@
 
         const boxes = document.querySelectorAll(".js-card"); // Stores every input field parent in play
 
-        gameCheckers(word, inputField, updateCount); // Check if the letters are in correct place or if the letters exists in the word or if the letters are inexistent in the word.
+        gameCheckers(word, inputField, updateLettersRightCount); // Check if the letters are in correct place or if the letters exists in the word or if the letters are inexistent in the word.
 
         setTimeout(()=>{
-            const wordsRight = updateCount(0); /* stores current value of updateCount */
+            const currentLettersRight = updateLettersRightCount(0); /* stores current value of updateLettersRightCount */
         
             const tries = updateTries(1); // updates the number of tries
 
-            if (wordsRight === word.length) { // check if user guessed the right word
+            if (currentLettersRight === word.length) { // check if user guessed the right word
                 createCongratsDiv(word, tries, createInputs, addEventsToInputs, generateGrid, generateRandomWord); // Generates new DOM in <main> tag to congrats the user for guessing the word right
-                updateCount(-(wordsRight)); // resets number of correct words
+                updateLettersRightCount(-(currentLettersRight)); // resets number of correct words
                 updateTries(-tries); // resets number of tries
             }
 
-            if (wordsRight !== word.length) { // Check if user didn't guess the word right. Helps preventing from creating new input fields if user guess the word
+            if (currentLettersRight !== word.length) { // Check if user didn't guess the word right. Helps preventing from creating new input fields if user guess the word
                 createNewRow(boxes, word, tries, createInputs);  // Create new rows
                 addEventsToInputs(); // add events to the new inputs
 
@@ -132,7 +132,7 @@
             }
 
                         
-            updateCount(-(wordsRight));
+            updateLettersRightCount(-(currentLettersRight));
         }, 200*(word.length-1)) 
 
         
@@ -284,7 +284,7 @@
       inputs: existing input fields
       wordsRight: updateCount() closure
     */
-    function gameCheckers(word, inputs, wordsRight) {
+    function gameCheckers(word, inputs, lettersRight) {
         inputs.forEach((letter, index) => {
             const p = document.createElement("p"); // will be appended on the current div to replace the current input: text, so the user can't type on it
             p.classList.add("letter", "txt-color");
@@ -294,7 +294,7 @@
                 if (letter.value.toLowerCase() === word[index].toLowerCase()) { // check if letter is correct and in the right place
                     letter.closest("div").style.backgroundColor = "var(--right-position)";
                     letter.closest("div").replaceChildren(p); 
-                    wordsRight(1); // will update the number of letters right
+                    lettersRight(1); // will update the number of letters right
         
                 }
             
