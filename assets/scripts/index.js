@@ -82,7 +82,7 @@ document.addEventListener("keyup", (e) => {
             gameCheckers(word, inputField, updateCount);
             const wordsRight = updateCount(0);
             const tries = updateTries(1);
-            
+            console.log(wordsRight);
             if (wordsRight === word.length) {
                 createCongratsDiv(word, tries, createInputs, addEventsToInputs, generateGrid);
                 updateTries(-tries);
@@ -217,22 +217,27 @@ function addEventsToInputs() {
 
 function gameCheckers(word, inputs, wordsRight) {
     inputs.forEach((letter, index) => {
-        const p = document.createElement("p");
-        p.classList.add("letter", "txt-color");
-        p.textContent = letter.value;
-        if (letter.value.toLowerCase() === word[index].toLowerCase()) {
-            letter.closest("div").style.backgroundColor = "var(--right-position)";
-            letter.closest("div").replaceChildren(p);
-            wordsRight(1);
-
-        }
-        if (word.includes(letter.value) && !(letter.value === word[index]) ) {
-            letter.closest("div").style.backgroundColor = "var(--is-in-word)";
-            letter.closest("div").replaceChildren(p);
-        }
-
-        if (!word.includes(letter.value)) {  
-            letter.closest("div").style.backgroundColor = "var(--wrong-position)";
-            letter.closest("div").replaceChildren(p);
-        }
+        setTimeout(()=>{
+            const p = document.createElement("p");
+            p.classList.add("letter", "txt-color");
+            p.textContent = letter.value;
+    
+            if (letter.value.toLowerCase() === word[index].toLowerCase()) {
+                letter.closest("div").style.backgroundColor = "var(--right-position)";
+                letter.closest("div").replaceChildren(p);
+                wordsRight(1);
+    
+            }
+        
+            if (word.includes(letter.value) && !(letter.value === word[index]) ) {
+                letter.closest("div").style.backgroundColor = "var(--is-in-word)";
+                letter.closest("div").replaceChildren(p);
+            }
+        
+            if (!word.includes(letter.value)) {  
+                letter.closest("div").style.backgroundColor = "var(--wrong-position)";
+                letter.closest("div").replaceChildren(p);
+            }
+        }, 200*index)
+        
 })}
