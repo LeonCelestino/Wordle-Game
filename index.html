@@ -13,7 +13,7 @@
 </head>
 <body>
     <section id="home" class="l-section-fs">
-        <h1 class="title, txt-color">Wordle</h1>
+        <h1 class="title txt-color">Wordle</h1>
         <main id="Wordle" class="wordle-grid">
 
         </main>
@@ -21,8 +21,8 @@
 </body>
 
 <template id="template-congrats">
-    <div class="congrats">
-        <h2 class="congrats-title txt-color">Congrats!</h2>
+    <div class="congrats after-game">
+        <h2 class="congrats-title after-game-title txt-color">Congrats!</h2>
         <p class="txt-color letter">You got the word <span class="js-word stl-word"></span> at your <span class="js-tries"></span> try!</p>
         <h3 class="question txt-color">Do you want to try again?</h3>
         <button class="js-button txt-color try-button">Yes</button>
@@ -30,10 +30,10 @@
 </template>
 
 <template id="template-try-again">
-    <div class="try-again">
-        <h2 class="unfortunate-title txt-color">How unfortunate! You didn't got it.</h2>
+    <div class="try-again after-game">
+        <h2 class="unfortunate-title after-game-title txt-color">How unfortunate! You didn't got it.</h2>
         <p class="txt-color letter">Better luck next time.</p>
-        <h3 class="question txt-color">Do you want to try again?</h3>
+        <h3 class="question txt-color">Do you want to play again?</h3>
         <button class="js-button txt-color try-button">Yes</button>
     </div>
 </template>
