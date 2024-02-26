@@ -79,35 +79,42 @@ document.addEventListener("keyup", (e) => {
         const isRowFilled = checkIfRowIsFilled(inputField, word);
 
         if (isRowFilled) { 
+            inputField.forEach((input) => input.setAttribute("disabled", "true"));
+
             gameCheckers(word, inputField, updateCount);
-            const wordsRight = updateCount(0);
-            const tries = updateTries(1);
-            console.log(wordsRight);
-            if (wordsRight === word.length) {
-                createCongratsDiv(word, tries, createInputs, addEventsToInputs, generateGrid);
-                updateTries(-tries);
-            }
+            setTimeout(()=>{
+                const wordsRight = updateCount(0);
+            
+                const tries = updateTries(1);
 
-            if (wordsRight !== word.length) {
-                createNewRow(boxes, word, tries, createInputs);
-                addEventsToInputs();
-
-                const newInput = document.querySelector(".js-inputField");
-                
-                if (newInput) {
-                    newInput.focus();
+                if (wordsRight === word.length) {
+                    createCongratsDiv(word, tries, createInputs, addEventsToInputs, generateGrid);
+                    updateCount(-(wordsRight));
+                    updateTries(-tries);
                 }
 
-            }   
+                if (wordsRight !== word.length) {
+                    createNewRow(boxes, word, tries, createInputs);
+                    addEventsToInputs();
 
-            updateCount(-(wordsRight));
+                    const newInput = document.querySelector(".js-inputField");
+                    
+                    if (newInput) {
+                        newInput.focus();
+                    }
+
+                }  
+            }, 400*(word.length-1)) 
+
         }
 
-        const tries = updateTries(0);
+        setTimeout(()=> {
+            const tries = updateTries(0);
     
-        if (tries === 4) {
-            tryAgain(generateGrid, createInputs, addEventsToInputs, word)
-        }
+            if (tries === 4) {
+                tryAgain(generateGrid, createInputs, addEventsToInputs, word)
+            }
+        }, 400*(word.length - 1));
         
 
     }
@@ -188,7 +195,6 @@ function addEventsToInputs() {
         input.addEventListener("keydown", (e) => {
             const target = e.target;
             const key = e.key.length === 1 ? e.key : "";
-
             if (e.code === "Backspace" && !target.value  && inputField[index - 1]) {
                 inputField[index - 1].value = "";
             }
@@ -201,6 +207,7 @@ function addEventsToInputs() {
 
         input.addEventListener("keyup", (e) => {
             const target = e.target;
+            const isRowFilled = checkIfRowIsFilled(inputField, word);
             if (target.value.length && inputField[index + 1]) {
                 inputField[index + 1].focus();
             }
@@ -217,15 +224,17 @@ function addEventsToInputs() {
 
 function gameCheckers(word, inputs, wordsRight) {
     inputs.forEach((letter, index) => {
+        const p = document.createElement("p");
+        p.classList.add("letter", "txt-color");
+        p.textContent = letter.value;
         setTimeout(()=>{
-            const p = document.createElement("p");
-            p.classList.add("letter", "txt-color");
-            p.textContent = letter.value;
     
             if (letter.value.toLowerCase() === word[index].toLowerCase()) {
                 letter.closest("div").style.backgroundColor = "var(--right-position)";
                 letter.closest("div").replaceChildren(p);
                 wordsRight(1);
+
+                console.log(letter.value, wordsRight(0))
     
             }
         
