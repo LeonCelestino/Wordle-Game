@@ -91,12 +91,14 @@
     }
     
     const updateLettersRightCount = lettersRight();
-    console.log(word)
     
+    /* updates current pressed key */
+    let currentKey = "";
     /* Will fire when the user press enter only */
     
-    document.addEventListener("keyup", async (e) => {
-        if (e.code !== "Enter") return;
+    document.addEventListener("keydown", async (e) => {
+        const key = e.key;
+        if (e.key !== "Enter") return;
 
         const inputField = document.querySelectorAll(".js-inputField");
         const isRowFilled = checkIfRowIsFilled(inputField, word);
@@ -145,7 +147,7 @@
                 updateTries(-tries); // reset number of tries
 
             }
-        }, 200*(word.length - 1));
+        }, 2000);
             
     
         
@@ -246,32 +248,39 @@
         inputField.forEach((input, index) => {
             input.addEventListener("input", (e) => { // event to allow letters only
                 const target = e.target;
+              
+                e.target.value = e.target.value.toLowerCase();
+
                 target.value = target.value.replace(/[^A-Za-z]/g, "");
+
+                target.value = target.value.slice(0, !target.value[0].match(/\d/) ? 1 : 2);
+
+                currentKey = target.value;
             })
     
             input.addEventListener("keydown", (e) => { // fires when user press the key down
-                const target = e.target; 
-                const key = e.key.length === 1 ? e.key : ""; // will return just keys with 1 letter, this preventing keys like Enter, shift, ctrl, etc, to be inserted
-                if (inputField[index - 1] && e.code === "Backspace" && !target.value ) {  // if backspace is hitted and target.value doesn't exist, will clear the preview input text (doesn't work for mobile devices). inputField[index-1] helps preventing error messages if it doesnt exist.
-                    inputField[index - 1].value = "";
-                }
+                const target = e.target;
+                const key = e.key.length === 1 ? e.key : "";
     
-                if (inputField[index + 1] && target.value && key) {  // if the current input in focus has a value, it will place a value to the next input based on the pressed key.
-                    inputField[index + 1].value = key;
+                if (!inputField[index + 1].value && target.value && key) {  // if the current input in focus has a value, it will place a value to the next input based on the pressed key.
+                    inputField[index + 1].value = key.toLowerCase();
+                    inputField[index+1].focus();
                 }
-    
+                
             })
     
             input.addEventListener("keyup", (e) => { // fires when user releases the key
                 const target = e.target;
-
+                
                 if (target.value.length && inputField[index + 1]) { // if the current input has a text inside, it will focus the next input.
                     inputField[index + 1].focus();
                 }
-    
-                if (e.code === "Backspace" && !target.value && inputField[index - 1]) { // will focus the previews input if user press backspace key (doesn't work for mobile devices)
+
+                if (!target.value.length && inputField[index - 1]) {
                     inputField[index - 1].focus();
+                    
                 }
+
     
             })
         })
@@ -310,4 +319,4 @@
             }, 200*index)
             
     })}
-    })();
+})();
