@@ -6,7 +6,7 @@
     */
 const generateRandomWord = async (length) => {
     try {
-        const url = "https://random-word-api.herokuapp.com/word?lang=en&length=" + length;
+        const url = "https://random-word.ryanrk.com/api/en/word/random/?length=" + length;
         const response = await fetch(url);
         
         if (!response.ok) {
