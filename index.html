@@ -15,17 +15,27 @@
     <section id="home" class="l-section-fs">
         <h1 class="title txt-color">Wordle</h1>
         <main id="Wordle" class="wordle-grid">
-
+            <h2>Choose your wordle size:</h2>
+            <button class="js-chooseLengthBtn" value="2">2 letters</button>
+            <button class="js-chooseLengthBtn" value="3">3 letters</button>
+            <button class="js-chooseLengthBtn" value="4">4 letters</button>
+            <button class="js-chooseLengthBtn" value="5">5 letters</button>
+            <button class="js-chooseLengthBtn" value="6">6 letters</button>
+            <button class="js-customLengthBtn">Custom</button>
         </main>
     </section>
 </body>
+
+<template id="customLength">
+    
+</template>
 
 <template id="template-congrats">
     <div class="congrats after-game">
         <h2 class="congrats-title after-game-title txt-color">Congrats!</h2>
         <p class="txt-color letter">You got the word <span class="js-word stl-word"></span> at your <span class="js-tries"></span> try!</p>
-        <h3 class="question txt-color">Do you want to try again?</h3>
-        <button class="js-button txt-color try-button">Yes</button>
+        <button class="js-button txt-color try-button question txt-color">Play again</button>
+        <button class="js-button txt-color try-button change txt-color">Change mode</button>
     </div>
 </template>
 
@@ -33,8 +43,8 @@
     <div class="try-again after-game">
         <h2 class="unfortunate-title after-game-title txt-color">How unfortunate! You didn't got it.</h2>
         <p class="txt-color letter">Better luck next time.</p>
-        <h3 class="question txt-color">Do you want to play again?</h3>
-        <button class="js-button txt-color try-button">Yes</button>
+        <button class="js-button txt-color try-button question txt-color">Try again/button>
+        <button class="js-button try-button change txt-color">Change mode/button>
     </div>
 </template>
 <script src="./assets/scripts/index.js"></script>
