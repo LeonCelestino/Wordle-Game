@@ -1,5 +1,65 @@
+.length-btns {
+    padding-block: .5rem;
+    border-radius: .5rem;
+    border: 0;
+    
+    background: var(--buttons);
+    box-shadow: 0px 1px 8px 0px var(--card-shadow);
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+    color: #fff;
+
+
+}
+.custom-length-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+.custom-length-btn {
+    padding: .5rem;
+    border-radius: .1rem;
+    border: 0;
+    
+    background: var(--buttons);
+
+    font-size: .9rem;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+
+.length-btns:hover, .custom-length-btn:hover {
+    cursor: pointer;
+    background: var(--buttons-on-hover);
+}
+
+.lengths-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+.custom-length-input {
+    padding: .5rem;
+
+    background: var(--input);
+    border-bottom: 0.0626rem solid var(--input-border);
+    border-top: 0;
+    border-inline: none;
+    border-radius: .1rem;
+
+    color: var(--text-color);
+    caret-color: var(--input-border);
+
+}
+
+.custom-length-input:focus {
+    outline: 0;
+}
+
 .l-section-fs {
-    padding-block: 5rem;
     min-height: 100svh;
 
     display: flex;
@@ -9,14 +69,11 @@
 }
 
 .wordle-grid {
-    width: min(100%, 50rem);
-    min-width: 15rem;
-    padding: 2rem;
-
     display: grid;
-    grid-template-columns: repeat(var(--columns), 1fr);
+    grid-template-columns: repeat(var(--columns), .3fr);
     place-content: center;
-    gap: 1rem;
+    row-gap: 1.5rem;
+    padding-inline: 1rem;
 
 }
 
@@ -26,7 +83,7 @@
 
 .m-card-style {
     background: var(--card-bg);
-    box-shadow: 0px 1px 8px 0px var(--card-shadow);
+    box-shadow: 5px 2px 8px 0px var(--card-shadow);
 
     display: flex;
     justify-content: center;
@@ -38,6 +95,11 @@
     user-select: none;
 }
 
+.size-title {
+    letter-spacing: .2rem;
+    color: var(--text-color);
+
+}
 .text-field {
     display: block;
     width: 100%;
@@ -47,16 +109,18 @@
     border: 0;
 
     text-align: center;
+    text-transform: uppercase;
 
     color: var(--text-color);
 }
 
 .letter {
     user-select: none;
+    text-transform: uppercase;
 }
 
 .letter, .text-field {
-    font-size: max(1rem, 1rem + 1vw);
+    font-size: max(1em, 1em + 1vw);
 }
 
 .txt-color {
@@ -109,3 +173,4 @@
 .unfortunate-title {
     color: #BF3131;
 }
+
