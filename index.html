@@ -41,8 +41,8 @@
     <div class="congrats after-game">
         <h2 class="congrats-title after-game-title txt-color">Congrats!</h2>
         <p class="txt-color letter">You got the word <span class="js-word stl-word"></span> at your <span class="js-tries"></span> try!</p>
-        <button class="js-button txt-color try-button question txt-color">Play again</button>
-        <button class="js-button txt-color try-button change txt-color">Change mode</button>
+        <button class="js-play-again txt-color try-button question txt-color">Play again</button>
+        <button class="js-change txt-color try-button txt-color">Change mode</button>
     </div>
 </template>
 
@@ -51,7 +51,24 @@
         <h2 class="unfortunate-title after-game-title txt-color">How unfortunate! You didn't got it.</h2>
         <p class="txt-color letter">Better luck next time.</p>
         <button class="js-button txt-color try-button question txt-color">Try again</button>
-        <button class="js-button try-button change txt-color">Change mode</button>
+        <button class="js-change try-button txt-color">Change mode</button>
+    </div>
+</template>
+
+<template id="template-lengths">
+    <div class="lengths-wrap">
+        <h2 class="size-title">Choose your wordle size:</h2>
+
+        <button class="js-chooseLengthBtn length-btns" value="2">2 letters</button>
+        <button class="js-chooseLengthBtn length-btns" value="3">3 letters</button>
+        <button class="js-chooseLengthBtn length-btns" value="4">4 letters</button>
+        <button class="js-chooseLengthBtn length-btns" value="5">5 letters</button>
+        <button class="js-chooseLengthBtn length-btns" value="6">6 letters</button>
+
+        <div class="custom-length-container">
+            <input type="text" class="js-customLengthInput custom-length-input">
+            <button class="js-customLengthBtn custom-length-btn">Play</button>
+        </div>
     </div>
 </template>
 <script src="./assets/scripts/index.js"></script>

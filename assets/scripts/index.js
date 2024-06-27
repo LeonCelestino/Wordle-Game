@@ -22,41 +22,46 @@ const generateRandomWord = async (length) => {
     }
 }
 
-document.querySelectorAll(".js-chooseLengthBtn").forEach((data) => {
-    data.addEventListener("click", async (e) => {
-        const length = e.target.value;
-        const randomWord = await generateRandomWord(length);
-
+function addEventsToButtons() {
+    document.querySelectorAll(".js-chooseLengthBtn").forEach((data) => {
+        data.addEventListener("click", async (e) => {
+            const length = e.target.value;
+            const randomWord = await generateRandomWord(length);
+    
+            document.querySelector("#Wordle").replaceChildren();
+    
+            generateGrid(randomWord, createInputs);
+            addEventsToInputs(randomWord);
+    
+        })
+    })
+    
+    document.querySelector(".js-customLengthBtn").addEventListener("click", async (e) => {
+        const typedLength = parseInt(document.querySelector(".js-customLengthInput").value);
+    
+        if (!typedLength) {
+            return window.alert("Please, type a valid length.");
+            
+        }
+    
+        if (typedLength > 25) {
+            return window.alert("Word too big. The UI won't look good, sorry");
+    
+        }
+    
+        const randomWord = await generateRandomWord(typedLength);
+    
         document.querySelector("#Wordle").replaceChildren();
-
+    
         generateGrid(randomWord, createInputs);
         addEventsToInputs(randomWord);
-
-    })
-})
-
-document.querySelector(".js-customLengthBtn").addEventListener("click", async (e) => {
-    const typedLength = parseInt(document.querySelector(".js-customLengthInput").value);
-
-    if (!typedLength) {
-        return window.alert("Please, type a valid length.");
-        
-    }
-
-    if (typedLength > 25) {
-        return window.alert("Word too big. The UI won't look good, sorry");
-
-    }
     
-    const randomWord = await generateRandomWord(typedLength);
+    
+    })
+    
+}
 
-    document.querySelector("#Wordle").replaceChildren();
-
-    generateGrid(randomWord, createInputs);
-    addEventsToInputs(randomWord);
-
-
-})
+addEventsToButtons();
 
 function generateGrid(word="", createNewInputs) {
     const length = word.length;
@@ -162,7 +167,7 @@ function onUserFinishTyping(word){
             updateTries(-tries); // reset number of tries
 
         }
-    }, 2000);
+    }, 1000);
    
 }
 
@@ -216,8 +221,7 @@ function createInputs(events) {
             createGrid: will generate a new grid based on the new word
             generateWord: will generate a new word. createCongratsDiv() is async because generateWord() is an asynchronous function
     */
-async function createCongratsDiv(word, tryy, createInputs, addEvents, createGrid, generateWord) {
-    const newWord = await generateWord();
+function createCongratsDiv(word, tryy, createInputs, addEvents, createGrid, generateWord) {
     const wordle = document.querySelector("#Wordle");
     const template = document.querySelector("#template-congrats");
     const clone = template.content.cloneNode(true);
@@ -227,10 +231,20 @@ async function createCongratsDiv(word, tryy, createInputs, addEvents, createGrid
 
     wordle.replaceChildren(clone);
     
-    document.querySelector(".js-button").addEventListener("click", _ => {
+    document.querySelector(".js-play-again").addEventListener("click", async _ => {
+        const newWord = await generateWord();
         wordle.replaceChildren();
         createGrid(newWord, createInputs);
         addEvents();
+    })
+
+    document.querySelector(".js-change").addEventListener("click", _ => {
+        const template = document.querySelector("#template-lengths");
+        const clone = template.content.cloneNode(true);
+
+        wordle.replaceChildren(clone);
+
+        addEventsToButtons()
     })
 
 }
@@ -255,7 +269,17 @@ function tryAgain(createGrid, createInputs, addEvents, word) {
         createGrid(word, createInputs);
         addEvents(word);
     })
+
+    document.querySelector(".js-change").addEventListener("click", _ => {
+        const template = document.querySelector("#template-lengths");
+        const clone = template.content.cloneNode(true);
+
+        wordle.replaceChildren(clone);
+
+        addEventsToButtons()
+    })
 }
+
 
 /* Will add keydown event listeners to the current input type text tags in play */
 function addEventsToInputs(word) {
