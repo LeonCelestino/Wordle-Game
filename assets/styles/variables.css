@@ -4,9 +4,13 @@
     --bg: #171C22;
     --card-shadow: #3a4556;
     --card-bg: #192027;
-    --wrong-position: #364145;
+    --wrong-position: #853e12;
     --right-position: #F29E38;
-    --is-in-word: #a9620a;
+    --buttons: #97ed35b2;
+    --buttons-on-hover: #f29e38d5;
+    --input-border: #d27606;
+    --is-in-word: #b57930;
+    --input: #4c535c36;
     /* DOM PROPERTIES */
 
     --columns: 0;

@@ -15,13 +15,20 @@
     <section id="home" class="l-section-fs">
         <h1 class="title txt-color">Wordle</h1>
         <main id="Wordle" class="wordle-grid">
-            <h2>Choose your wordle size:</h2>
-            <button class="js-chooseLengthBtn" value="2">2 letters</button>
-            <button class="js-chooseLengthBtn" value="3">3 letters</button>
-            <button class="js-chooseLengthBtn" value="4">4 letters</button>
-            <button class="js-chooseLengthBtn" value="5">5 letters</button>
-            <button class="js-chooseLengthBtn" value="6">6 letters</button>
-            <button class="js-customLengthBtn">Custom</button>
+            <div class="lengths-wrap">
+                <h2 class="size-title">Choose your wordle size:</h2>
+
+                <button class="js-chooseLengthBtn length-btns" value="2">2 letters</button>
+                <button class="js-chooseLengthBtn length-btns" value="3">3 letters</button>
+                <button class="js-chooseLengthBtn length-btns" value="4">4 letters</button>
+                <button class="js-chooseLengthBtn length-btns" value="5">5 letters</button>
+                <button class="js-chooseLengthBtn length-btns" value="6">6 letters</button>
+
+                <div class="custom-length-container">
+                    <input type="text" class="js-customLengthInput custom-length-input">
+                    <button class="js-customLengthBtn custom-length-btn">Play</button>
+                </div>
+            </div>
         </main>
     </section>
 </body>
@@ -43,8 +50,8 @@
     <div class="try-again after-game">
         <h2 class="unfortunate-title after-game-title txt-color">How unfortunate! You didn't got it.</h2>
         <p class="txt-color letter">Better luck next time.</p>
-        <button class="js-button txt-color try-button question txt-color">Try again/button>
-        <button class="js-button try-button change txt-color">Change mode/button>
+        <button class="js-button txt-color try-button question txt-color">Try again</button>
+        <button class="js-button try-button change txt-color">Change mode</button>
     </div>
 </template>
 <script src="./assets/scripts/index.js"></script>

@@ -14,16 +14,15 @@ const generateRandomWord = async (length) => {
         }
 
         const data = await response.json();
-        
+
         return data[0];
     } catch(err) {
-        console.log("aaaaaaa")
+        console.log("err")
         console.log(err);
     }
 }
 
 document.querySelectorAll(".js-chooseLengthBtn").forEach((data) => {
-    console.log("a")
     data.addEventListener("click", async (e) => {
         const length = e.target.value;
         const randomWord = await generateRandomWord(length);
@@ -34,6 +33,29 @@ document.querySelectorAll(".js-chooseLengthBtn").forEach((data) => {
         addEventsToInputs(randomWord);
 
     })
+})
+
+document.querySelector(".js-customLengthBtn").addEventListener("click", async (e) => {
+    const typedLength = parseInt(document.querySelector(".js-customLengthInput").value);
+
+    if (!typedLength) {
+        return window.alert("Please, type a valid length.");
+        
+    }
+
+    if (typedLength > 25) {
+        return window.alert("Word too big. The UI won't look good, sorry");
+
+    }
+    
+    const randomWord = await generateRandomWord(typedLength);
+
+    document.querySelector("#Wordle").replaceChildren();
+
+    generateGrid(randomWord, createInputs);
+    addEventsToInputs(randomWord);
+
+
 })
 
 function generateGrid(word="", createNewInputs) {
@@ -57,6 +79,7 @@ function generateGrid(word="", createNewInputs) {
     document.querySelectorAll(".js-inputField")[0].removeAttribute("disabled");
 
     document.documentElement.style.setProperty("--columns", length);
+   
 
     return wordle;
 
